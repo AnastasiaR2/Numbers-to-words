@@ -6,20 +6,12 @@
   let tens = ['', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'];
 
   let hundreds = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
+
+  // let num = +prompt('Введите число:');
+
+  let num = 643;
+
   
-  let num = 111;
-
-  if(num < 10){
-    num = units[num];
-  }else if(num >= 10 && num < 20){
-    num = teens[num - 10];
-  }else if(num >= 20 && num < 100){
-    num = tens[Math.floor(num / 10)] + ' ' + units[num % 10];
-  }else if(num >= 100 && num < 1000){
-    num =  hundreds[Math.floor(num / 100)] + ' ' + tens[Math.floor(num / 10)] + ' ' + units[num % 10];
-  }
-
-  console.log(num);
 
   
 
