@@ -7,26 +7,53 @@
 
   let hundreds = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
 
-  // let num = +prompt('Введите число:');
-
-  let num = 11;
+  let num = +prompt('Введите число:');
 
   function hrivna(num){
     let lastDigit = +String(num).slice(-1);
     let twoLastDigit = +String(num).slice(-2);
-    if (lastDigit > 3 && lastDigit <= 9 || lastDigit == 0 || twoLastDigit == 11) {
+    if (lastDigit >= 5 && lastDigit <= 9 || lastDigit == 0 || twoLastDigit >= 11 && twoLastDigit <= 14) {
       return 'гривен';
-    }else if (lastDigit == 2 || lastDigit == 3){
+    }else if (lastDigit >= 2 && lastDigit <= 4){
       return 'гривны';
     }else if (lastDigit == 1){
       return 'гривна';
     }
   }
 
+  function thousandsWords(num){
+    let checkT = Math.floor(num / 1000);
+    let lastDigit = +String(checkT).slice(-1);
+    let twoLastDigit = +String(checkT).slice(-2);
+    if (lastDigit >= 5 && lastDigit <= 9 || lastDigit == 0 || twoLastDigit >= 11 && twoLastDigit <= 14) {
+      return ' тысяч ';
+    }else if (lastDigit >= 2 && lastDigit <= 4){
+      return ' тысячи ';
+    }else if (lastDigit == 1){
+      return ' тысяча ';
+    }
+  }
+
+  function millionWords(num){
+    let checkM = Math.floor(num / 1000000);
+    let lastDigit = +String(checkM).slice(-1);
+    let twoLastDigit = +String(checkM).slice(-2);
+    if (lastDigit >= 5 && lastDigit <= 9 || lastDigit == 0 || twoLastDigit >= 11 && twoLastDigit <= 14) {
+      return ' миллионов ';
+    }else if (lastDigit >= 2 && lastDigit <= 4){
+      return ' миллиона ';
+    }else if (lastDigit == 1){
+      return ' миллион ';
+
+    }
+  }
+
   function convertTens(num) {
-    if(num < 10){
+    if (num < 10){
       return units[num];
-    }else if(num >= 10 && num < 20){
+    }else if (num < 10){
+      return unitsMil[num];
+    }else if (num >= 10 && num < 20){
       return teens[num - 10];
     }else {
       return tens[Math.floor(num / 10)] + ' ' + units[num % 10];
@@ -40,41 +67,33 @@
       return convertTens(num)
     }
   }
-  
+
   function convertThousands(num) {
-    if (num >= 1000 && num < 2000) {
-      return convertHundreds(Math.floor(num / 1000)) + ' тысяча ' + convertHundreds(num % 1000); 
-    }else if (num >= 2000 && num < 5000){
-      return convertHundreds(Math.floor(num / 1000)) + ' тысячи ' + convertHundreds(num % 1000);
-    }else if (num >= 5000){
-      return convertHundreds(Math.floor(num / 1000)) + ' тысяч ' + convertHundreds(num % 1000);
-    }else{
+    if (num >= 1000) {
+      return convertHundreds(Math.floor(num / 1000)) + thousandsWords(num) + convertHundreds(num % 1000); 
+    }else {
       return convertHundreds(num);
     }
   }
 
   function convertMillions(num) {
-    if (num >= 1000000 && num < 2000000){
-      return convertThousands(Math.floor(num / 1000000)) + ' миллион ' + convertThousands(num % 1000000);
-    }else if (num >= 2000000 && num < 5000000){
-      return convertThousands(Math.floor(num / 1000000)) + ' миллиона ' + convertThousands(num % 1000000);
-    }else if (num >= 5000000 && num <= 999999999){
-      return convertThousands(Math.floor(num / 1000000)) + ' миллионнов ' + convertThousands(num % 1000000);
+    
+    if (num >= 1000000 && num <= 999999999){
+      num =  convertHundreds(Math.floor(num / 1000000)) + millionWords(num) + convertThousands(num % 1000000);
+      let milArr = num.split('миллион');
+      milArr[0] = milArr[0].replace('две', 'два');
+      milArr[0] = milArr[0].replace('одна', 'один');
+      return milArr = milArr.join('миллион');
     }else {
       return convertThousands(num);
     }
   }
 
-  function main() {
-  var cases = [1, 2, 10, 11, 19, 20, 21, 22, 27, 50, 99, 100, 101, 110, 111, 1000, 2011, 4000, 5000, 1000011, 2000000, 3000000, 5000000, 999999999];
-  for (var i = 0; i < cases.length; i++) {
-    console.log(cases[i] + ": " + convertMillions(cases[i]) + ' ' + hrivna(cases[i]));
+  function result (num){
+    return (convertMillions(num) + ' ' + hrivna(num)).replace(/ +/g, ' ');
   }
-}
 
-  main();
-
-  console.log(convertMillions(num) + ' ' + hrivna(num));
+  console.log(`${num}: ${result(num)}`);
 
   
 
