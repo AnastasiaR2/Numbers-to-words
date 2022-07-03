@@ -51,8 +51,6 @@
   function convertTens(num) {
     if (num < 10){
       return units[num];
-    }else if (num < 10){
-      return unitsMil[num];
     }else if (num >= 10 && num < 20){
       return teens[num - 10];
     }else {
