@@ -1,5 +1,3 @@
-# homework-B.2
-
-The script writes in words the amount given by the number that the user entered, ranging from 1 to 999 999 999 (inclusive). For example:
-643 => six hundred forty-three hryvnias
+The script writes in words the amount given by the number that entered, ranging from 1 to 999 999 999 (inclusive), language - russian. Result can be checked in console.
+<br> For example: 643 => шестьсот сорок три гривны
  
